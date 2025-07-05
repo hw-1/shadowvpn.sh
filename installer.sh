@@ -12,7 +12,7 @@ function patch_libsodium() {
   sed -i 's/ALIGN( 64 ) typedef struct blake2s_state_/typedef struct ALIGN( 64 ) blake2s_state_/g'  $patchFile
   sed -i 's/ALIGN( 64 ) typedef struct blake2b_state_/typedef struct ALIGN( 64 ) blake2b_state_/g'  $patchFile
   sed -i 's/#ifndef DEFINE_BLAKE2B_STATE/#ifdef DEFINE_BLAKE2B_STATE/g' $patchFile
-  cat $patchFile |grep "ALIGN( 64 ) typedef struct blake2s_state_"
+  #cat $patchFile |grep "ALIGN( 64 ) typedef struct blake2s_state_"
 }
 
 # unzip shadowvpn.zip
