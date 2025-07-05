@@ -72,7 +72,9 @@ echo subnetmask:255.255.255.0
 echo mtu:$mtu
 echo ------------------------------
 
-echo start ShadowVPN 
+
+ps aux|grep shadowvpn|grep -v grep|awk '{print $2}' |while read var;do echo $var;kill -9 $var;done
+echo start ShadowVPN
 sudo /opt/shadowvpn/bin/shadowvpn -c /opt/shadowvpn/etc/shadowvpn/server.conf -s start
 # sudo /opt/shadowvpn/bin/shadowvpn -c /opt/shadowvpn/etc/shadowvpn/server.conf -s stop
 
