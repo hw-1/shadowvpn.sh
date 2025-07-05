@@ -6,6 +6,15 @@ REPOROOT=$(pwd)
 
 sudo apt-get  install  -y libtool m4 automake gcc-12 build-essential  autotools-dev  autotools-dev libtool m4 automake autoconf autogen    git daemon   socat unzip net-tools p7zip-full unzip
 set -e
+
+function patch_libsodium() {
+  patchFile="./libsodium/src/libsodium/crypto_generichash/blake2/ref/blake2.h"
+  sed -i 's/ALIGN( 64 ) typedef struct blake2s_state_/typedef struct ALIGN( 64 ) blake2s_state_/g'  $patchFile
+  sed -i 's/ALIGN( 64 ) typedef struct blake2b_state_/typedef struct ALIGN( 64 ) blake2b_state_/g'  $patchFile
+  sed -i 's/#ifndef DEFINE_BLAKE2B_STATE/#ifdef DEFINE_BLAKE2B_STATE/g' $patchFile
+  cat $patchFile |grep "ALIGN( 64 ) typedef struct blake2s_state_"
+}
+
 # unzip shadowvpn.zip
 tmpdir=$(mktemp -d)
 cd $tmpdir
@@ -13,6 +22,7 @@ git clone --recursive https://github.com/hw-1/ShadowVPN.git
 cd ShadowVPN
 ./autogen.sh
 ./configure --prefix=/opt/shadowvpn --sysconfdir=/opt/shadowvpn/etc
+patch_libsodium
 make
 sudo make install
 
@@ -82,20 +92,4 @@ installcron "* * * * * bash  /opt/shadowvpn/bin/shadowvpn.sh"
 rm -rf $tmpdir
 exit 0
 # user_token=7e335d67f1dc2c01,ff593b9e6abeb2a5,e3c7b8db40a96105
-
-tail -f /var/log/shadowvpn.log
-
-size of array element is not a multiple of its alignment
-
-Edit the black2.h file, move the ALIGNME(64) from the beginning to the middle.
-vim ./libsodium/src/libsodium/crypto_generichash/blake2/ref/blake2.h
-
-
-#define DEFINE_BLAKE2B_STATE 1
-ALIGN( 64 ) typedef struct blake2s_state_
-typedef struct ALIGN( 64 ) blake2s_state_
-
-ALIGN( 64 ) typedef struct blake2b_state_
-typedef struct ALIGN( 64 ) blake2b_state_
-
-Re-run your make -jX in the depends folder and it should work now.
+ 
