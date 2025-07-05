@@ -4,7 +4,7 @@ cd "`dirname \"$0\"`"
 REPOROOT=$(pwd)
 #echo $REPOROOT
 
-sudo apt-get install libtool m4 automake gcc-12
+sudo apt-get  install  -y libtool m4 automake gcc-12
 set -e
 # unzip shadowvpn.zip
 git clone --recursive https://github.com/hw-1/ShadowVPN.git
