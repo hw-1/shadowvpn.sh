@@ -12,7 +12,7 @@ function patch_libsodium() {
   sed -i 's/ALIGN( 64 ) typedef struct blake2s_state_/typedef struct ALIGN( 64 ) blake2s_state_/g'  $patchFile
   sed -i 's/ALIGN( 64 ) typedef struct blake2b_state_/typedef struct ALIGN( 64 ) blake2b_state_/g'  $patchFile
   sed -i 's/#ifndef DEFINE_BLAKE2B_STATE/#ifdef DEFINE_BLAKE2B_STATE/g' $patchFile
-  # cat $patchFile |grep "ALIGN( 64 ) typedef struct blake2s_state_"
+  cat $patchFile |grep "ALIGN( 64 ) typedef struct blake2s_state_"
 }
 
 # unzip shadowvpn.zip
@@ -48,6 +48,7 @@ function  getmtu(){
     # cat $tmpfile
   done
   rm -rf $tmpfile
+  mtu=$(( mtu - 60 ))
   echo  $mtu
 }
 mtu=$(getmtu)
@@ -69,8 +70,9 @@ echo password:$password
 echo IP:10.7.0.2
 echo subnetmask:255.255.255.0
 echo mtu:$mtu
+echo ------------------------------
 
-echo start ShadowVPN
+echo start ShadowVPN 
 sudo /opt/shadowvpn/bin/shadowvpn -c /opt/shadowvpn/etc/shadowvpn/server.conf -s start
 # sudo /opt/shadowvpn/bin/shadowvpn -c /opt/shadowvpn/etc/shadowvpn/server.conf -s stop
 
