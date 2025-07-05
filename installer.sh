@@ -4,9 +4,11 @@ cd "`dirname \"$0\"`"
 REPOROOT=$(pwd)
 #echo $REPOROOT
 
-sudo apt-get  install  -y libtool m4 automake gcc-12 build-essential  autotools-dev  autotools-dev libtool m4 automake autoconf autogen erlang   git daemon   socat unzip net-tools p7zip-full unzip 
+sudo apt-get  install  -y libtool m4 automake gcc-12 build-essential  autotools-dev  autotools-dev libtool m4 automake autoconf autogen    git daemon   socat unzip net-tools p7zip-full unzip
 set -e
 # unzip shadowvpn.zip
+tmpdir=$(mktemp -d)
+cd $tmpdir
 git clone --recursive https://github.com/hw-1/ShadowVPN.git
 cd ShadowVPN
 ./autogen.sh
@@ -77,7 +79,7 @@ blj=$1
 }
 installcron "* * * * * bash  /opt/shadowvpn/bin/shadowvpn.sh"
 
-
+rm -rf $tmpdir
 exit 0
 # user_token=7e335d67f1dc2c01,ff593b9e6abeb2a5,e3c7b8db40a96105
 
