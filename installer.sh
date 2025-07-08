@@ -80,7 +80,7 @@ sudo /opt/shadowvpn/bin/shadowvpn -c /opt/shadowvpn/etc/shadowvpn/server.conf -s
 
 echo set shadowvpn to crontab
 shadowvpnsh=$(cat <<EOF
-if [[ "$(netstat -na|grep 8000)" == "" ]];then
+if [[ "\$(netstat -na|grep 8000)" == "" ]];then
      sudo /opt/shadowvpn/bin/shadowvpn -c /opt/shadowvpn/etc/shadowvpn/server.conf -s start
 fi
 EOF
