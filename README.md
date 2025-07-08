@@ -9,5 +9,5 @@ sudo   ./installer.sh
 ```
 
 支持客户端：
-iPhone : [Fugu](https://apps.apple.com/us/app/fugu-2/id6452590635)
-安卓： -
+- iPhone : [Fugu](https://apps.apple.com/us/app/fugu-2/id6452590635)
+- 安卓： -
